@@ -205,6 +205,5 @@ public class Plane  extends GameObiect {
 		this.y = plane_Y;
 	}
 	
-	
 
 }

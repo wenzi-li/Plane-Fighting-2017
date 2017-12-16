@@ -59,6 +59,7 @@ public class Bullet extends GameObiect {
 		this.speed = bulletSpeed;
 		}
 		
+
 		
 	
 }
