@@ -10,7 +10,7 @@ import MyUtil.GameUtil;
  *
  */
 
-public class healthPoint extends GameObiect {
+public class HealthPoint extends GameObiect {
 	
 	
 	//是否显示某个血量图片
@@ -29,7 +29,7 @@ public class healthPoint extends GameObiect {
 
 
 
-	public healthPoint() {
+	public HealthPoint() {
 		
 	}
 	
@@ -45,7 +45,7 @@ public class healthPoint extends GameObiect {
 	}
 	
 	//通过构造器给血条的图形，位置初始化；
-	public healthPoint(String healthPointImagepath,  double healthPoint_X, double healthPoint_Y) {
+	public HealthPoint(String healthPointImagepath,  double healthPoint_X, double healthPoint_Y) {
 		super();
 		this.image = GameUtil.getImage(healthPointImagepath);
 		this.width = image.getWidth(null);

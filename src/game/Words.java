@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import javax.swing.JLabel;
+
 /**
  * 游戏场景中出现的文字提示
  * @author wenzi
@@ -30,23 +32,23 @@ public class Words extends GameObiect {
 
 
 
-
-	//写提示文字；
-	public void drawWords(Graphics g) {
-		if(isWrite()) {
-			
-			Color c = g.getColor();
-			g.setColor(Color.black);
-			Font f = new Font("Goudy Stout", Font.PLAIN, 40);
-			g.setFont(f);
-			g.drawString("465465", 500, 500);
-			g.setColor(c);
-			
-			
-		}
-			
-		
-	}
+//
+//	//写提示文字；
+//	public void drawWords(Graphics g) {
+//		if(isWrite()) {
+//			
+//			Color c = g.getColor();
+//			g.setColor(Color.black);
+//			Font f = new Font("Goudy Stout", Font.PLAIN, 40);
+//			g.setFont(f);
+//			g.drawString("465465", 500, 500);
+//			g.setColor(c);
+//			
+//			
+//		}
+//			
+//		
+//	}
 	
 	
 	
@@ -62,13 +64,31 @@ public class Words extends GameObiect {
 	
 	
 	
-	public Words(String str ,int size,int x,int y, Color color) {
-		this();
+	
+	public Words(Graphics g,String str ,int size,int x,int y, Color color, String font) {
+		Color c = g.getColor();
+		g.setColor(color);
+		Font f = new Font(font, Font.BOLD, size);
+		g.setFont(f);
+		g.drawString(str, x, y);
+		g.setColor(c);
 	}
 	
 	
 	
-	public Words() {
+	
+	
+	
+//	public Words(String str ,int size,int x,int y, Color color) {
+//		this();
+//	}
+//	
+	
+	
+	public Words(String str) {
+		
+		
+		
 		
 	}
 	
