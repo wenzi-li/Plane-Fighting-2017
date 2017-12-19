@@ -5,7 +5,7 @@ package MyUtil;
  *
  */
 public class Constant {
-	public static final int GAME_WIDTH = 1300;
-	public static final int GAME_HEIGHT = 800;
+	public static final int GAME_WIDTH = 800;
+	public static final int GAME_HEIGHT = 500;
 
 }

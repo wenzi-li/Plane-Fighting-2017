@@ -18,7 +18,7 @@ import MyUtil.GameUtil;
 public class Plane  extends GameObiect {
 
 	//定义方向
-	private boolean left,up,right,down;
+	private boolean left,up,down;
 	//是否被击中
 	private boolean hit = false;
 	
@@ -31,28 +31,32 @@ public class Plane  extends GameObiect {
 	//在窗口中画出飞机
 	public void drawPlane(Graphics g) {
 		
+		
 		if(!hit) {
 			g.drawImage(image, (int)x, (int)y, null);
 			planeMove();
+			
 			
 		}
 		
 	}
 	
+
 	
-	//用键盘控制飞机移动
+	
+	//飞机移动
 	public void planeMove() {
 		
 		if (left) {
 			x -= speed;
 		}
-		if (right) {
-			if(x >= 0) {
-				x += speed;	
-			}else {
-				x = 0;
-			}
-		}
+//		if (right) {
+//			if(x >= 0) {
+//				x += speed;	
+//			}else {
+//				x = 0;
+//			}
+//		}
 		if (up) {
 			if(y >= 0){
 				y -= speed;
@@ -70,6 +74,8 @@ public class Plane  extends GameObiect {
 		
 	}
 	
+		
+	
 	//按下方向键，飞机向前飞。
 	public void addDirection(KeyEvent e) {
 		switch (e.getKeyCode()) {
@@ -79,12 +85,12 @@ public class Plane  extends GameObiect {
 				speed += 0.5;
 			}
 			break;
-		case 39: case 68: case 102:
-			right = true ;
-			if(speed < 15){
-				speed += 0.5;
-				}
-			break;
+//		case 39: case 68: case 102:
+//			right = true ;
+//			if(speed < 15){
+//				speed += 0.5;
+//				}
+//			break;
 		case 38: case 87: case 104:
 			up = true ;
 			if(speed < 15){
@@ -110,10 +116,10 @@ public class Plane  extends GameObiect {
 			left = false ;
 			speed = 8;
 			break;
-		case 39: case 68: case 102:
-			right = false ;
-			speed = 8;
-			break;
+//		case 39: case 68: case 102:
+//			right = false ;
+//			speed = 8;
+//			break;
 		case 38: case 87: case 104:
 			up = false ;
 			speed = 8;
@@ -152,33 +158,18 @@ public class Plane  extends GameObiect {
 	
 	//移动飞机的到初识位置；
 	public void pointMove(  ) {
-	/*	while((int)x != x0) {
-			if((int)x > x0) {
-				for(int i = (int)x; i > x0; i--) {
-					x-=1000;
-				}
-			}
-			else {
-				for(int i = (int)x; i < x0; i++) {
-					
-				}
-			}
-		}
-		while((int)y != y0) {
-			if((int)y > y0) {
-				for(int i = (int)y; i != y0; i--) {
-					y = i;
-				}
-			}
-			else {
-				for(int i = (int)y; i != y0; i++) {
-					y = i;
-				}
-			}
-		}
-		*/
+		
 		x = 80;
-		y = 100;
+		y = 200;
+		
+		try {
+			
+			Thread.sleep(50);
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	
 		
 	}
 	

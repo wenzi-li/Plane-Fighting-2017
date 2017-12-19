@@ -1,9 +1,7 @@
 package game;
 
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.time.Year;
+import java.awt.event.KeyEvent;
 
 import MyUtil.Constant;
 import MyUtil.GameUtil;
@@ -16,8 +14,11 @@ import MyUtil.GameUtil;
 
 public class Bullet extends GameObiect {
 	
-	//定义子弹的方向
-	double bulletDirection = Math.random()*Math.PI*2;
+	
+	
+	
+	//是否射击
+	private boolean shoot = false;
 
 
 	public Bullet() {
@@ -25,26 +26,54 @@ public class Bullet extends GameObiect {
 	}
 	
 	
+	public boolean isShoot() {
+		return shoot;
+	}
+
+
+	public void setShoot(boolean shoot) {
+		this.shoot = shoot;
+	}
+	
+
 	//画子弹
 	public void drawBullet(Graphics g) {
-		g.drawImage(image, (int)x, (int)y, null);
-		bulletMove();
+		if(isShoot()){
+			g.drawImage(image, (int)x, (int)y, null);
+			bulletMove();
+		}
+		
 	}
+	
+	
 	
 	
 	//子弹运动
 	public void bulletMove() {
-		x += speed*Math.cos(Math.random()*bulletDirection);
-		y += speed*Math.sin(Math.random()*bulletDirection);
+		x += speed;
 		
-		if(y >= Constant.GAME_HEIGHT - heigth || y <= 30) {
-			speed = -speed;
-		}
-		if(x >= Constant.GAME_WIDTH - heigth || x <= 10) {
-			speed = -speed;
+	}
+	
+	
+	
+	//飞机射击
+	public void shoot(KeyEvent e) {
+			//按数字键盘的9键进行射击；
+		if(e.getKeyCode() == 105) {
+			shoot = true;
+		}else {
+			shoot = false;
 		}
 	}
 	
+
+//    //释放按键子弹发出；
+//	public void fire(KeyEvent e) {
+//		
+//		if(e.getKeyCode() == 105) {
+//			shoot = true;
+//		}
+//	}
 	
 	
 	

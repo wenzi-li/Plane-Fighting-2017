@@ -12,24 +12,42 @@ import MyUtil.GameUtil;
  */
 
 public class Explode {
+	
 	//爆炸发生的位置坐标；
 	double x,y;
+	
+//	//是否产生爆炸；
+//	private boolean boom = false;
+//	
+//	public boolean isBoom() {
+//		return boom;
+//	}
+//
+//
+//	public void setBoom(boolean boom) {
+//		this.boom = boom;
+//	}
+
+
 	//爆炸图片数组；
-	static Image[] images = new Image[10];
+	static Image[] images = new Image[8];
+	
 	static {
-		for (int i = 0; i < 10 ;i++) {
-			images[i] = GameUtil.getImage("images/e"+(i+1+".jpg"));
+		for (int i = 0; i < 8 ;i++) {
+			images[i] = GameUtil.getImage("images/explode/big/000.png");
 			images[i].getWidth(null);
 		}
 	}
+	
 	//计数器，计算图片当前个数；
 	int count;
 	
-	
 	public void draw(Graphics g) {
-		if(count <= 10) {
+		if(count < 8) {
+			
 			g.drawImage(images[count], (int)x, (int)y, null);
 			count++;	
+			
 		}
 		
 	}

@@ -33,21 +33,23 @@ import MyUtil.MyFrame;
  */
 
 public class GameFrame extends MyFrame{
-	Image bg = GameUtil.getImage("images/1.jpg");
+	Map m = new Map("images/space.jpg", 0, 0, 30);
 
-	Plane p1 = new Plane("images/plane3_128px.png", 8, 80, 200);
+	Plane p1 = new Plane("images/Plane1_128px.png", 0, 300, 200);
 
-	HealthPoint hp1 = new HealthPoint("images/HP30%.png", 80, 60);
-	HealthPoint hp2 = new HealthPoint("images/PH50%.png", 80, 60);
-	HealthPoint hp3 = new HealthPoint("images/HP80%.png", 80, 60);
-	HealthPoint hp4 = new HealthPoint("images/PH100%.png", 80, 60);
+	HealthPoint hp1 = new HealthPoint("images/HP30%.png", 10, 60);
+	HealthPoint hp2 = new HealthPoint("images/PH50%.png", 10, 60);
+	HealthPoint hp3 = new HealthPoint("images/HP80%.png", 10, 60);
+	HealthPoint hp4 = new HealthPoint("images/PH100%.png", 10, 60);
+	
+	Bullet b1 = new Bullet("images/bill_bullet_supermario_48px.png", 10,p1.x,p1.y);
 	
 	
-	
-
+	//定义一个explode对象；
+	Explode e1;
 	
 	//生成一堆子弹放在数组中储存；
-	ArrayList bulletList = new ArrayList();          //未加泛型；
+	ArrayList asteroidList = new ArrayList();          //未加泛型；
 
 	//定义游戏开始时间；
 	Date startTime;
@@ -59,53 +61,51 @@ public class GameFrame extends MyFrame{
 	int time = 0;
 	//画出背景
 	public void paint(Graphics g) {
-		g.drawImage(bg, 0, -280, null);
+		
+		m.drawMap(g);
+		
 		p1.drawPlane(g);
 		hp1.drawhealthPoint(g);
 		hp2.drawhealthPoint(g);
 		hp3.drawhealthPoint(g);
 		hp4.drawhealthPoint(g);
 		
+		b1.drawBullet(g);
+		
+		
+
+		//画出陨石
+		for(int i = 0; i < asteroidList.size() ; i ++) {
+			Asteroid b1 = (Asteroid)asteroidList.get(i);
+			b1.drawAsteroid(g);
 
 
-		//画出子弹
-		for(int i = 0; i < bulletList.size() ; i ++) {
-			Bullet b1 = (Bullet)bulletList.get(i);
-			b1.drawBullet(g);
-
-
-			//检测子弹和飞机的碰撞；
+			//检测陨石和飞机的碰撞；
 			boolean peng = b1.getRectangle().intersects(p1.getRectangle());
 			
 
 
-			if(peng) {	
+			while(peng) {	
+				
+				e1 = new Explode(p1.x, p1.y);
+				e1.draw(g);
+				
+	
 				//发生碰撞,飞机消失；
-				p1.setHit(true); 
+				//p1.setHit(true); 
 				
-				//记录飞机被子弹击中的时间；
+				//记录飞机被陨石击中的时间；
 				endTime1 = new Date();
-		
 				
-				
-				try {
-					
-					Thread.sleep(500);
-					
-
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 				time++;
 				p1.pointMove();
 				
-
-
+				break;
 			}
+			
 
 		}
 
-		
 		
 
 		if (p1.isHit()) {
@@ -116,27 +116,16 @@ public class GameFrame extends MyFrame{
 			
 		}
 		
-		
-
-		
-		endTime2 = new Date();
-		//显示游戏时长,以秒为单位；
-		long timePeriod2 = (endTime2.getTime() - startTime.getTime())/1000;
-		new Words(g,timePeriod2+"s", 30, 1200, 90, Color.black,"old evils");
-		
-		
-		
-
-
-		System.out.println(time);
 
 		switch (time) {
 		
 		case 0:
 			new Words(g, "100%", 20, 230, 85, Color.black);
+			
 			break;
 		case 1:
 			new Words(g,"75%", 20, 230, 85, Color.black);
+			
 			p1.setHit(false);      	
 			hp4.setShow(false);
 
@@ -144,6 +133,7 @@ public class GameFrame extends MyFrame{
 			break;
 		case 2:
 			new Words(g,"50%", 20, 230, 85, Color.black);
+			
 			p1.setHit(false);          
 			hp4.setShow(false);
 			hp3.setShow(false);
@@ -151,13 +141,15 @@ public class GameFrame extends MyFrame{
 			break;
 		case 3:
 			new Words(g,"25%", 20, 230, 85, Color.black);
+			
 			p1.setHit(false);             
 			hp4.setShow(false);
 			hp3.setShow(false);
 			hp2.setShow(false);
 
 			break;
-		case 4:                                 
+		case 4:     
+			
 			p1.setHit(true);
 			hp4.setShow(false);
 			hp3.setShow(false);
@@ -169,6 +161,15 @@ public class GameFrame extends MyFrame{
 			break;
 		}
 
+		
+		
+		
+		endTime2 = new Date();
+		//显示游戏时长,以秒为单位；
+		long timePeriod2 = (endTime2.getTime() - startTime.getTime())/1000;
+		new Words(g,timePeriod2+"s", 30, 1200, 90, Color.black,"old evils");
+		System.out.println(time);
+		
 
 	}
 
@@ -189,10 +190,12 @@ public class GameFrame extends MyFrame{
 		addMouseMotionListener(new mouseMonitor());
 
 
+		
+		
 		//生成子弹；
-		for(int i = 0; i < 20; i++) {
-			Bullet b1 = new Bullet("images/bill_bullet_supermario_48px.png", Math.random()*4,Math.random()*1300 + 500, Math.random()*800);
-			bulletList.add(b1);
+		for(int i = 0; i < 2; i++) {
+			Asteroid b1 = new Asteroid("images/asteroid_128px.png", Math.random()*3,Math.random()*1000 , Math.random()*500);
+			asteroidList.add(b1);
 		}
 
 		//记录游戏开始时间；
@@ -212,7 +215,8 @@ public class GameFrame extends MyFrame{
 			//键盘按下时飞机移动；
 			//System.out.println("按下："+e.getKeyCode());
 			p1.addDirection(e);
-
+			m.addDirection(e);
+			b1.shoot(e);
 		}
 
 		@Override
@@ -221,6 +225,7 @@ public class GameFrame extends MyFrame{
 			//键盘释放时飞机停止。
 			//System.out.println("释放："+e.getKeyCode());
 			p1.stopDirection(e);
+			m.stopDirection(e);
 		}
 
 
@@ -236,6 +241,7 @@ public class GameFrame extends MyFrame{
 			//点击并拖动鼠标
 			//System.out.println("点击？"+ e.getButton());
 			p1.moveMouse(e);
+			m.mapMove();
 
 		}
 

@@ -88,8 +88,6 @@ public class Words extends GameObiect {
 	public Words(String str) {
 		
 		
-		
-		
 	}
 	
 
